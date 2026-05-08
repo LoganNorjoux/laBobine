@@ -189,8 +189,12 @@ function render() {
   <div class="periode-header" onclick="togglePeriode('${p.id}')">
     
     <h3 data-title-id="${p.id}">
-      ${p.debut && p.fin ? `Période (${p.debut} → ${p.fin})` : "Période"}
-    </h3>
+  ${
+    p.debut && p.fin
+      ? `${formatDateFR(p.debut)} → ${formatDateFR(p.fin)}`
+      : ""
+  }
+</h3>
 
     <div style="display:flex; gap:6px; align-items:center;">
 
@@ -602,11 +606,19 @@ function openPeriodeModal(id = null) {
   modalBody.innerHTML = `
     <h3>${isEdit ? "Modifier période" : "Nouvelle période"}</h3>
 
+    <div class="two-cols">
+
+  <div class="field-item">
     <label>Début</label>
     <input id="m-debut" type="date" value="${periode.debut}" />
+  </div>
 
+  <div class="field-item">
     <label>Fin</label>
     <input id="m-fin" type="date" value="${periode.fin}" />
+  </div>
+
+</div>
 
     <div style="margin-top:15px; display:flex; gap:10px;">
       <button onclick="closeModal()">Annuler</button>
@@ -669,11 +681,19 @@ function openFilmModal(periodeId, filmId = "") {
   modalBody.innerHTML = `
     <h3>${filmId ? "Modifier film" : "Nouveau film"}</h3>
 
+    <div class="two-cols">
+
+  <div class="field-item">
     <label>Titre</label>
     <input id="m-titre" value="${film.titre}" />
+  </div>
 
+  <div class="field-item">
     <label>Âge</label>
     <input id="m-age" value="${film.age}" />
+  </div>
+
+</div>
 
     <hr style="margin:15px 0;" />
 
@@ -684,13 +704,12 @@ function openFilmModal(periodeId, filmId = "") {
       ${dates.map(date => `
         <div class="horaire-day">
 
-          <label>${date}</label>
+          <label title="${date}">${formatDateFR(date)}</label>
 
           <input
             type="text"
             data-date="${date}"
             class="m-horaire"
-            placeholder="ex: 14:00, 20:30"
             value="${(film.horaires?.[date] || []).join(", ")}"
           />
 
@@ -868,12 +887,19 @@ function handleDrop(event, periodeId, targetFilmId) {
 }
 
 function showModal() {
-
-  document
-    .getElementById("modal")
-    .classList.remove("hidden");
+  const modal = document.getElementById("modal");
+  modal.classList.remove("hidden");
 
   document.body.classList.add("modal-open");
+
+  // focus auto après rendu DOM
+  setTimeout(() => {
+    const firstInput = modal.querySelector("input, textarea, select");
+    if (firstInput) {
+      firstInput.focus();
+      firstInput.select?.(); // utile pour les inputs texte
+    }
+  }, 0);
 }
 
 function closeModal() {
@@ -884,3 +910,32 @@ function closeModal() {
 
   document.body.classList.remove("modal-open");
 }
+
+function formatDateFR(dateStr) {
+  if (!dateStr) return "";
+
+  const d = new Date(dateStr);
+
+  return new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long"
+  }).format(d);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const modal = document.getElementById("modal");
+    if (!modal) return;
+
+    if (!modal.classList.contains("hidden")) {
+      closeModal();
+    }
+  }
+});
+
+document.getElementById("modal").addEventListener("click", (e) => {
+  if (e.target.id === "modal") {
+    closeModal();
+  }
+});

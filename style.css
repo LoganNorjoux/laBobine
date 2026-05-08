@@ -700,7 +700,8 @@ button:disabled {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  width: 420px;
+
+  width: min(700px, 92vw);
 }
 
 .edit-btn {
@@ -966,4 +967,33 @@ body.modal-open {
 
   box-shadow:
     0 0 0 3px rgba(198, 40, 40, 0.12);
+}
+
+.horaires-modal {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.horaire-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fafafa;
+}
+
+.modal-content input {
+  font-size: 13px;
+  padding: 8px;
+}
+
+.modal-content .two-cols {
+  margin-bottom: 12px;
 }
