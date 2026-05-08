@@ -1003,3 +1003,81 @@ body.modal-open {
 
   margin-top: 18px;
 }
+
+/* =======================
+   RESPONSIVE
+======================= */
+
+/* TABLETTE */
+@media (max-width: 1100px) {
+  .container {
+    grid-template-columns: 380px 1fr;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: auto;
+  }
+
+  .left-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .right-panel {
+    width: 100%;
+    overflow: auto;
+  }
+
+  /* film cards + périodes plus compactes */
+  .film,
+  .periode {
+    margin-top: 10px;
+  }
+
+  /* grid inputs passent en 1 colonne */
+  .two-cols,
+  .horaires,
+  .horaires-modal {
+    grid-template-columns: 1fr;
+  }
+
+  /* modale full screen confortable */
+  .modal-content {
+    width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* texte un peu plus lisible */
+  body {
+    font-size: 14px;
+  }
+}
+
+/* PETITS TELEPHONES */
+@media (max-width: 420px) {
+
+  .cinema-title .big {
+    font-size: 28px;
+  }
+
+  .cinema-logo {
+    font-size: 36px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+}
