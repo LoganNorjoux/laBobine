@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Preview A4</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+/>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- 🟦 COLONNE GAUCHE -->
+  <div class="left-panel">
+
+    <!-- MENU ACTIONS -->
+    <div class="actions-menu">
+      <button class="menu-btn" type="button" onclick="toggleMenu()">⋯</button>
+
+      <div id="menuDropdown" class="menu-dropdown hidden">
+
+        <button type="button" onclick="document.getElementById('importFile').click()">
+          Import JSON
+        </button>
+
+        <button type="button" onclick="exportJSON()">
+          Export JSON
+        </button>
+
+      </div>
+    </div>
+
+    <!-- IMPORT FILE (utilisé par JS) -->
+    <input type="file" id="importFile" accept="application/json" hidden />
+
+    <!-- HEADER -->
+    <h2>Programmation</h2>
+
+    <!-- ACTION PRINCIPALE -->
+    <button type="button" class="primary" onclick="addPeriode()">
+      + Nouvelle période
+    </button>
+
+    <!-- CONTENEUR DYNAMIQUE -->
+    <div id="periodes"></div>
+
+  </div>
+
+  <!-- 🟩 COLONNE DROITE -->
+  <div class="right-panel">
+	<div class="preview-wrapper">
+
+		<div class="a4-preview">
+			<div id="pdf-preview"></div>
+		</div>
+
+	</div>
+	</div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

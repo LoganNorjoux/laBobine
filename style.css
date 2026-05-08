@@ -1,0 +1,675 @@
+/* =======================
+   DESIGN TOKENS
+======================= */
+:root {
+
+  /* COLORS */
+  --color-primary: #c62828;
+  --color-primary-hover: #b71c1c;
+
+  --color-danger: #c62828;
+  --color-danger-bg: #ffebee;
+
+  --color-bg: #ffffff;
+  --color-panel: #fafafa;
+  --color-border: #e0e0e0;
+
+  --color-text: #333;
+  --color-muted: #666;
+
+  --color-input-bg: #ffffff;
+
+  /* SHADOWS */
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-primary: 0 4px 12px rgba(198, 40, 40, 0.25);
+
+  /* RADIUS */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* TRANSITIONS */
+  --transition-fast: 0.15s ease;
+  --transition: 0.2s ease;
+}
+
+/* =======================
+   RESET GLOBAL
+======================= */
+* {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* =======================
+   TITRES
+======================= */
+h2 {
+  margin-top: 10px;
+}
+
+h3 {
+  margin-bottom: 2px;
+  margin-top: 0;
+  color: var(--color-text);
+}
+
+/* =======================
+   LAYOUT GLOBAL
+======================= */
+.container {
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  height: 100vh;
+}
+
+/* =======================
+   LEFT PANEL
+======================= */
+.left-panel {
+  background: var(--color-bg);
+  padding: 15px;
+  border-right: 1px solid var(--color-border);
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+form {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* =======================
+   INPUTS
+======================= */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: 14px;
+  outline: none;
+  padding: 10px;
+
+  background: var(--color-input-bg);
+  transition: var(--transition);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.08);
+}
+
+/* =======================
+   BLOCKS
+======================= */
+.periode,
+.film {
+  width: 100%;
+  background: var(--color-panel);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.periode {
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.film {
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px dashed var(--color-border);
+}
+
+/* =======================
+   HEADERS
+======================= */
+.periode-header,
+.film-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  min-width: 0;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+/* =======================
+   GRID INPUTS
+======================= */
+.two-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.field-item {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  border: 1px solid var(--color-border);
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  min-width: 0;
+}
+
+.field-item label {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+/* =======================
+   HORAIRES
+======================= */
+.horaires {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.horaires > div {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  border: 1px solid var(--color-border);
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  min-width: 0;
+}
+
+.horaires label {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* =======================
+   RIGHT PANEL
+======================= */
+.right-panel {
+  background: #e9eaec;
+  display: grid;
+  place-items: start center;
+}
+
+/* =======================
+   BUTTON SYSTEM
+======================= */
+button {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+/* PRIMARY */
+button.primary {
+  margin-top: 5px;
+  background: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow-primary);
+}
+
+button.primary:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* SECONDARY */
+button.secondary,
+.menu-dropdown button {
+  background: #f5f5f5;
+  color: var(--color-text);
+}
+
+button.secondary:hover,
+.menu-dropdown button:hover {
+  background: #eaeaea;
+}
+
+/* DISABLED */
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =======================
+   DELETE BUTTON
+======================= */
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  color: var(--color-danger);
+
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    color 160ms ease;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 59, 48, 0.12);
+  transform: scale(1.05);
+}
+
+.delete-btn .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1;
+  margin-right: 20px;
+}
+
+/* =======================
+   COLLAPSE ANIMATION
+======================= */
+.periode-body,
+.film-body {
+  overflow: hidden;
+  transition: all 250ms ease;
+}
+
+.collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =======================
+   MENU
+======================= */
+.actions-menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.menu-btn {
+  background: var(--color-primary);
+  color: white;
+
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: var(--shadow-primary);
+  transition: var(--transition);
+}
+
+.menu-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+
+  box-shadow: var(--shadow-md);
+  z-index: 999;
+}
+
+.menu-dropdown button {
+  background: white;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  padding: 20mm;
+  box-sizing: border-box;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transform-origin: top center;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  .left-panel {
+    display: none;
+  }
+
+  .right-panel {
+    width: 100%;
+  }
+
+  .a4 {
+    box-shadow: none;
+    transform: none;
+    width: 210mm;
+    min-height: 297mm;
+  }
+}
+
+/* =========================================
+   A4 PREVIEW
+========================================= */
+
+.preview-wrapper {
+  width: 100%;
+  overflow: auto;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.a4-preview {
+  width: 210mm;
+  min-height: 297mm;
+  background: #efe5ae;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.18);
+
+  overflow: hidden;
+}
+
+/* =========================================
+   SHEET
+========================================= */
+
+.cinema-sheet {
+  background: #efe5ae;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.cinema-header {
+  background:
+    linear-gradient(
+      180deg,
+      #d94141 0%,
+      #b91d1d 100%
+    );
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding:
+    18px
+    22px
+    14px;
+}
+
+.cinema-logo {
+  font-size: 52px;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+}
+
+.cinema-title {
+  line-height: 1;
+}
+
+.cinema-title .small {
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.cinema-title .big {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.cinema-title .city {
+  margin-top: 8px;
+  font-size: 22px;
+  letter-spacing: 3px;
+}
+
+/* =========================================
+   INFOS
+========================================= */
+
+.cinema-infos {
+  background: #f4e7b5;
+
+  border-top: 2px solid rgba(255,255,255,0.2);
+
+  padding:
+    8px
+    18px
+    6px;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.cinema-tarifs {
+  font-weight: bold;
+}
+
+.cinema-special {
+  color: #b91d1d;
+  font-weight: bold;
+}
+
+.cinema-promo {
+  margin-top: 4px;
+
+  background: #c62828;
+  color: white;
+
+  padding: 4px 8px;
+
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* =========================================
+   PERIODES
+========================================= */
+
+.periode-print {
+  padding:
+    14px
+    18px
+    8px;
+}
+
+.periode-print-title {
+  color: #c62828;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  margin-bottom: 8px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.programme-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  background: #f7efc5;
+}
+
+.programme-table th,
+.programme-table td {
+  border: 1px solid #433b27;
+}
+
+/* HEADER TABLE */
+
+.programme-table th {
+  background: #bf2323;
+  color: white;
+
+  padding: 5px 4px;
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* FIRST COLUMN */
+
+.film-col {
+  width: 310px;
+}
+
+/* CELLS */
+
+.programme-table td {
+  height: 42px;
+
+  padding: 4px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  font-size: 12px;
+}
+
+/* FILM TITLE */
+
+.film-title-cell {
+  text-align: left;
+  padding-left: 10px !important;
+
+  font-weight: bold;
+}
+
+.film-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.film-title {
+  font-size: 11px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* AGE */
+
+.film-age {
+  flex-shrink: 0;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 999px;
+
+  background: #c62828;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* HORAIRES */
+
+.horaire-cell {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.cinema-footer {
+  margin-top: 18px;
+
+  background: #1f1f1f;
+  color: #f1c75c;
+
+  text-align: center;
+
+  padding:
+    14px
+    12px;
+
+  font-size: 18px;
+  font-weight: 900;
+}
