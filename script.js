@@ -217,36 +217,42 @@ function render() {
 
       ${p.films.map(f => `
         <div class="film"
+  data-film-id="${f.id}"
   draggable="true"
+
   ondragstart="handleDragStart(event, '${p.id}', '${f.id}')"
+
+  ondragend="handleDragEnd()"
+
   ondragover="handleDragOver(event)"
+
   ondrop="handleDrop(event, '${p.id}', '${f.id}')">
 
-          <div class="film-header" onclick="toggleFilm('${p.id}','${f.id}')">
+  <div class="film-header"
+    onclick="toggleFilm('${p.id}','${f.id}')">
 
-            <h3 data-film-title-id="${f.id}">
-              ${f.titre || "Film"}${f.age ? ` (${f.age})` : ""}
-            </h3>
+    <h3 data-film-title-id="${f.id}">
+      ${f.titre || "Film"}${f.age ? ` (${f.age})` : ""}
+    </h3>
 
-            <div style="display:flex; gap:6px; align-items:center;">
+    <div style="display:flex; gap:6px; align-items:center;">
 
-             <button type="button"
-  class="edit-btn"
-  onclick="event.stopPropagation(); openFilmModal('${p.id}','${f.id}')">
-  ✏️
-</button>
+      <button type="button"
+        class="edit-btn"
+        onclick="event.stopPropagation(); openFilmModal('${p.id}','${f.id}')">
+        ✏️
+      </button>
 
-<button type="button"
-  class="delete-btn"
-  onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
-  🗑
-</button>
+      <button type="button"
+        class="delete-btn"
+        onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
+        🗑
+      </button>
 
-            </div>
+    </div>
 
-          </div>
-
-        </div>
+  </div>
+</div>
       `).join("")}
 
     </div>
@@ -760,25 +766,62 @@ function validatePeriodeModal() {
 // DRAG & DROP FILMS
 // =======================
 
+let dragPreviewPosition = null;
+
 function handleDragStart(event, periodeId, filmId) {
 
   draggedFilmId = filmId;
 
   event.dataTransfer.effectAllowed = "move";
-
   event.dataTransfer.setData("text/plain", filmId);
+
+  event.currentTarget.classList.add("dragging");
+}
+
+function handleDragEnd() {
+
+  document
+    .querySelectorAll(".film")
+    .forEach(el => {
+      el.classList.remove(
+        "drag-over-top",
+        "drag-over-bottom",
+        "dragging"
+      );
+    });
+
+  dragPreviewPosition = null;
 }
 
 function handleDragOver(event) {
+
   event.preventDefault();
 
-  const film = event.currentTarget;
+  const filmEl = event.currentTarget;
+  const rect = filmEl.getBoundingClientRect();
+
+  const offsetY = event.clientY - rect.top;
+  const isTop = offsetY < rect.height / 2;
 
   document
-    .querySelectorAll(".film.drag-over")
-    .forEach(el => el.classList.remove("drag-over"));
+    .querySelectorAll(".film")
+    .forEach(el => {
+      el.classList.remove(
+        "drag-over-top",
+        "drag-over-bottom"
+      );
+    });
 
-  film.classList.add("drag-over");
+  if (isTop) {
+    filmEl.classList.add("drag-over-top");
+  } else {
+    filmEl.classList.add("drag-over-bottom");
+  }
+
+  dragPreviewPosition = {
+    targetFilmId: filmEl.dataset.filmId,
+    position: isTop ? "before" : "after"
+  };
 }
 
 function handleDrop(event, periodeId, targetFilmId) {
@@ -788,18 +831,34 @@ function handleDrop(event, periodeId, targetFilmId) {
   const periode = state.periodes.find(p => p.id === periodeId);
   if (!periode) return;
 
-  const sourceIndex = periode.films.findIndex(f => f.id === draggedFilmId);
-  const targetIndex = periode.films.findIndex(f => f.id === targetFilmId);
+  const sourceIndex =
+    periode.films.findIndex(f => f.id === draggedFilmId);
+
+  const targetIndex =
+    periode.films.findIndex(f => f.id === targetFilmId);
 
   if (sourceIndex === -1 || targetIndex === -1) return;
 
-  const [movedFilm] = periode.films.splice(sourceIndex, 1);
+  const [movedFilm] =
+    periode.films.splice(sourceIndex, 1);
 
-  periode.films.splice(targetIndex, 0, movedFilm);
-  
-  document
-  .querySelectorAll(".film.drag-over")
-  .forEach(el => el.classList.remove("drag-over"));
+  let insertIndex = targetIndex;
+
+  if (
+    dragPreviewPosition &&
+    dragPreviewPosition.position === "after"
+  ) {
+    insertIndex++;
+  }
+
+  // correction index après splice
+  if (sourceIndex < insertIndex) {
+    insertIndex--;
+  }
+
+  periode.films.splice(insertIndex, 0, movedFilm);
+
+  dragPreviewPosition = null;
 
   render();
 }
