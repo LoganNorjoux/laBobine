@@ -643,8 +643,6 @@ button:disabled {
   height: 24px;
 
   border-radius: 999px;
-
-  background: #c62828;
   color: white;
 
   display: flex;
@@ -996,4 +994,12 @@ body.modal-open {
 
 .modal-content .two-cols {
   margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 18px;
 }

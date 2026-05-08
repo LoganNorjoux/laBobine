@@ -542,9 +542,10 @@ function renderPDFPreview() {
 
               ${f.age
                 ? `
-                  <div class="film-age">
-                    ${f.age}
-                  </div>
+                  <div class="film-age"
+     style="background:${getAgeColor(f.age)}">
+  ${f.age}
+</div>
                 `
                 : ""
               }
@@ -620,13 +621,17 @@ function openPeriodeModal(id = null) {
 
 </div>
 
-    <div style="margin-top:15px; display:flex; gap:10px;">
-      <button onclick="closeModal()">Annuler</button>
+    <div class="modal-actions">
 
-      <button id="btn-save-periode" class="primary" disabled>
-        Valider
-      </button>
-    </div>
+  <button onclick="closeModal()">
+    Annuler
+  </button>
+
+  <button id="btn-save-periode" class="primary" disabled>
+    Valider
+  </button>
+
+</div>
   `;
 
   showModal();
@@ -690,7 +695,17 @@ function openFilmModal(periodeId, filmId = "") {
 
   <div class="field-item">
     <label>Âge</label>
-    <input id="m-age" value="${film.age}" />
+    <select id="m-age">
+
+  <option value=""></option>
+
+  ${Array.from({ length: 14 }, (_, i) => i + 3).map(age => `
+    <option value="${age}" ${film.age == age ? "selected" : ""}>
+      ${age} ans
+    </option>
+  `).join("")}
+
+</select>
   </div>
 
 </div>
@@ -718,12 +733,17 @@ function openFilmModal(periodeId, filmId = "") {
 
     </div>
 
-    <div style="margin-top:15px; display:flex; gap:10px;">
-      <button onclick="closeModal()">Annuler</button>
-      <button class="primary" onclick="saveFilmModal('${periodeId}','${filmId || ""}')">
-        Valider
-      </button>
-    </div>
+    <div class="modal-actions">
+
+  <button onclick="closeModal()">
+    Annuler
+  </button>
+
+  <button class="primary" onclick="saveFilmModal('${periodeId}','${filmId || ""}')">
+    Valider
+  </button>
+
+</div>
   `;
 
   showModal();
@@ -939,3 +959,18 @@ document.getElementById("modal").addEventListener("click", (e) => {
     closeModal();
   }
 });
+
+function getAgeColor(age) {
+
+  const min = 3;
+  const max = 16;
+
+  const a = Math.max(min, Math.min(max, Number(age)));
+
+  const ratio = (a - min) / (max - min);
+
+  const hue = 210 - (210 * ratio); 
+  // 210 = bleu, 0 = rouge
+
+  return `hsl(${hue}, 75%, 45%)`;
+}
