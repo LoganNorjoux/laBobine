@@ -2,6 +2,8 @@ const state = {
   periodes: []
 };
 
+let draggedFilmId = null;
+
 // =======================
 // UTIL
 // =======================
@@ -214,7 +216,11 @@ function render() {
     <div class="films">
 
       ${p.films.map(f => `
-        <div class="film">
+        <div class="film"
+  draggable="true"
+  ondragstart="handleDragStart(event, '${p.id}', '${f.id}')"
+  ondragover="handleDragOver(event)"
+  ondrop="handleDrop(event, '${p.id}', '${f.id}')">
 
           <div class="film-header" onclick="toggleFilm('${p.id}','${f.id}')">
 
@@ -748,6 +754,54 @@ function validatePeriodeModal() {
     new Date(fin) >= new Date(debut);
 
   btn.disabled = !isValid;
+}
+
+// =======================
+// DRAG & DROP FILMS
+// =======================
+
+function handleDragStart(event, periodeId, filmId) {
+
+  draggedFilmId = filmId;
+
+  event.dataTransfer.effectAllowed = "move";
+
+  event.dataTransfer.setData("text/plain", filmId);
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+
+  const film = event.currentTarget;
+
+  document
+    .querySelectorAll(".film.drag-over")
+    .forEach(el => el.classList.remove("drag-over"));
+
+  film.classList.add("drag-over");
+}
+
+function handleDrop(event, periodeId, targetFilmId) {
+
+  event.preventDefault();
+
+  const periode = state.periodes.find(p => p.id === periodeId);
+  if (!periode) return;
+
+  const sourceIndex = periode.films.findIndex(f => f.id === draggedFilmId);
+  const targetIndex = periode.films.findIndex(f => f.id === targetFilmId);
+
+  if (sourceIndex === -1 || targetIndex === -1) return;
+
+  const [movedFilm] = periode.films.splice(sourceIndex, 1);
+
+  periode.films.splice(targetIndex, 0, movedFilm);
+  
+  document
+  .querySelectorAll(".film.drag-over")
+  .forEach(el => el.classList.remove("drag-over"));
+
+  render();
 }
 
 function showModal() {

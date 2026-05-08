@@ -747,3 +747,15 @@ button:disabled {
   font-size: 12px;
   color: var(--color-muted);
 }
+
+.film[draggable="true"] {
+  cursor: grab;
+}
+
+.film[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.film.drag-over {
+  outline: 2px dashed var(--color-primary);
+}
