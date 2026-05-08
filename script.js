@@ -196,14 +196,16 @@ function render() {
 
       <button type="button"
   class="edit-btn"
+  style="cursor: pointer"
   onclick="event.stopPropagation(); openPeriodeModal('${p.id}')">
   ✏️
 </button>
 
 <button type="button"
   class="delete-btn"
+  style="cursor: pointer"
   onclick="event.stopPropagation(); removePeriode('${p.id}')">
-  🗑
+  🗑️
 </button>
 
     </div>
@@ -239,14 +241,16 @@ function render() {
 
       <button type="button"
         class="edit-btn"
+		style="cursor: pointer"
         onclick="event.stopPropagation(); openFilmModal('${p.id}','${f.id}')">
         ✏️
       </button>
 
       <button type="button"
         class="delete-btn"
+style="cursor: pointer"
         onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
-        🗑
+        🗑️
       </button>
 
     </div>
@@ -864,9 +868,19 @@ function handleDrop(event, periodeId, targetFilmId) {
 }
 
 function showModal() {
-  document.getElementById("modal").classList.remove("hidden");
+
+  document
+    .getElementById("modal")
+    .classList.remove("hidden");
+
+  document.body.classList.add("modal-open");
 }
 
 function closeModal() {
-  document.getElementById("modal").classList.add("hidden");
+
+  document
+    .getElementById("modal")
+    .classList.add("hidden");
+
+  document.body.classList.remove("modal-open");
 }
