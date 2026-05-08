@@ -282,7 +282,7 @@ function render() {
         <button type="button"
           class="primary"
           data-addfilm="${p.id}"
-          onclick="addFilm('${p.id}')"
+          onclick="openFilmModal('${p.id}')"
           ${!p.debut || !p.fin ? "disabled title='Saisis les dates'" : ""}>
           + Film
         </button>
@@ -607,4 +607,130 @@ function renderPDFPreview() {
 
 function exportPDF() {
   window.print();
+}
+
+function openPeriodeModal(id = null) {
+  const isEdit = !!id;
+  const periode = isEdit
+    ? state.periodes.find(p => p.id === id)
+    : { debut: "", fin: "" };
+
+  const modalBody = document.getElementById("modal-body");
+
+  modalBody.innerHTML = `
+    <h3>${isEdit ? "Modifier période" : "Nouvelle période"}</h3>
+
+    <label>Début</label>
+    <input id="m-debut" type="date" value="${periode.debut}" />
+
+    <label>Fin</label>
+    <input id="m-fin" type="date" value="${periode.fin}" />
+
+    <div style="margin-top:15px; display:flex; gap:10px;">
+      <button onclick="closeModal()">Annuler</button>
+      <button class="primary" onclick="savePeriodeModal('${id || ""}')">
+        Valider
+      </button>
+    </div>
+  `;
+
+  showModal();
+}
+
+function savePeriodeModal(id) {
+  const debut = document.getElementById("m-debut").value;
+  const fin = document.getElementById("m-fin").value;
+
+  if (id) {
+    const p = state.periodes.find(p => p.id === id);
+    p.debut = debut;
+    p.fin = fin;
+  } else {
+    state.periodes.push({
+      id: createId(),
+      debut,
+      fin,
+      films: [],
+      ui: { open: true }
+    });
+  }
+
+  closeModal();
+  render();
+}
+
+function openFilmModal(periodeId, filmId = null) {
+
+  const periode = state.periodes.find(p => p.id === periodeId);
+
+  const film = filmId
+    ? periode.films.find(f => f.id === filmId)
+    : { titre: "", age: "", horaires: {} };
+
+  const modalBody = document.getElementById("modal-body");
+
+  modalBody.innerHTML = `
+    <h3>${filmId ? "Modifier film" : "Nouveau film"}</h3>
+
+    <label>Titre</label>
+    <input id="m-titre" value="${film.titre}" />
+
+    <label>Âge</label>
+    <input id="m-age" value="${film.age}" />
+
+    <div style="margin-top:15px; display:flex; gap:10px;">
+      <button onclick="closeModal()">Annuler</button>
+      <button class="primary" onclick="saveFilmModal('${periodeId}','${filmId || ""}')">
+        Valider
+      </button>
+    </div>
+  `;
+
+  showModal();
+}
+
+function saveFilmModal(periodeId, filmId = "") {
+
+  const periode = state.periodes.find(p => p.id === periodeId);
+  if (!periode) return;
+
+  const titre = document.getElementById("m-titre").value;
+  const age = document.getElementById("m-age").value;
+
+  // =======================
+  // EDIT EXISTING FILM
+  // =======================
+  if (filmId) {
+
+    const film = periode.films.find(f => f.id === filmId);
+    if (!film) return;
+
+    film.titre = titre;
+    film.age = age;
+  }
+
+  // =======================
+  // CREATE NEW FILM
+  // =======================
+  else {
+
+    periode.films.push({
+      id: createId(),
+      titre,
+      age,
+      horaires: {},
+      ui: { open: true }
+    });
+  }
+
+  closeModal();
+  render();
+}
+
+function showModal() {
+  document.getElementById("modal").classList.remove("hidden");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
 }
