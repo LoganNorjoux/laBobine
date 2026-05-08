@@ -693,3 +693,57 @@ button:disabled {
   border-radius: 12px;
   width: 420px;
 }
+
+.edit-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  color: var(--color-primary);
+
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    color 160ms ease;
+}
+
+.edit-btn:hover {
+  background: rgba(198, 40, 40, 0.12);
+  transform: scale(1.05);
+}
+
+.edit-btn .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.horaires-modal {
+  display: grid;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.horaire-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fafafa;
+}
+
+.horaire-day label {
+  font-size: 12px;
+  color: var(--color-muted);
+}

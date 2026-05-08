@@ -184,111 +184,77 @@ function render() {
     div.className = "periode";
 
     div.innerHTML = `
-      <div class="periode-header" onclick="togglePeriode('${p.id}')">
-        <h3 data-title-id="${p.id}">
-          ${p.debut && p.fin ? `Période (${p.debut} → ${p.fin})` : "Période"}
-        </h3>
+  <div class="periode-header" onclick="togglePeriode('${p.id}')">
+    
+    <h3 data-title-id="${p.id}">
+      ${p.debut && p.fin ? `Période (${p.debut} → ${p.fin})` : "Période"}
+    </h3>
 
-        <button type="button"
-		  class="delete-btn"
-		  onclick="event.stopPropagation(); removePeriode('${p.id}')">
+    <div style="display:flex; gap:6px; align-items:center;">
 
-		  <span class="material-symbols-outlined">
-			delete
-		  </span>
+      <button type="button"
+  class="edit-btn"
+  onclick="event.stopPropagation(); openPeriodeModal('${p.id}')">
+  ✏️
+</button>
 
-		</button>
-      </div>
+<button type="button"
+  class="delete-btn"
+  onclick="event.stopPropagation(); removePeriode('${p.id}')">
+  🗑
+</button>
 
-      <div class="periode-body ${p.ui.open ? "" : "collapsed"}">
+    </div>
 
-        <div class="two-cols">
-          <div class="field-item">
-            <label>Début</label>
-            <input type="date"
-              value="${p.debut}"
-              data-periode-id="${p.id}"
-              data-field="debut" />
-          </div>
+  </div>
 
-          <div class="field-item">
-            <label>Fin</label>
-            <input type="date"
-              value="${p.fin}"
-              data-periode-id="${p.id}"
-              data-field="fin" />
-          </div>
-        </div>
+  <div class="periode-body ${p.ui.open ? "" : "collapsed"}">
 
-        <div class="films">
+    <!-- RÉCAP FILMS -->
+    <div class="films">
 
-          ${p.films.map(f => `
-            <div class="film">
+      ${p.films.map(f => `
+        <div class="film">
 
-              <div class="film-header" onclick="toggleFilm('${p.id}','${f.id}')">
-                <h3 data-film-title-id="${f.id}">
-                  ${f.titre || "Film"}${f.age ? ` (${f.age})` : ""}
-                </h3>
+          <div class="film-header" onclick="toggleFilm('${p.id}','${f.id}')">
 
-				<button type="button"
-				  class="delete-btn"
-				  onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
+            <h3 data-film-title-id="${f.id}">
+              ${f.titre || "Film"}${f.age ? ` (${f.age})` : ""}
+            </h3>
 
-				  <span class="material-symbols-outlined">
-					delete
-				  </span>
+            <div style="display:flex; gap:6px; align-items:center;">
 
-				</button>
-              </div>
-              <div class="film-body ${f.ui.open ? "" : "collapsed"}">
+             <button type="button"
+  class="edit-btn"
+  onclick="event.stopPropagation(); openFilmModal('${p.id}','${f.id}')">
+  ✏️
+</button>
 
-                <div class="two-cols">
-                  <div class="field-item">
-                    <label>Titre</label>
-                    <input value="${f.titre}"
-                      data-film-id="${f.id}"
-                      data-periode-id="${p.id}"
-                      data-field="titre" />
-                  </div>
+<button type="button"
+  class="delete-btn"
+  onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
+  🗑
+</button>
 
-                  <div class="field-item">
-                    <label>Âge</label>
-                    <input value="${f.age}"
-                      data-film-id="${f.id}"
-                      data-periode-id="${p.id}"
-                      data-field="age" />
-                  </div>
-                </div>
-
-                <div class="horaires">
-                  ${dates.map(d => `
-                    <div class="field-item">
-                      <label>${d}</label>
-                      <input value="${(f.horaires[d] || []).join(", ")}"
-                        data-film-id="${f.id}"
-                        data-periode-id="${p.id}"
-                        data-date="${d}"
-                        data-field="horaire" />
-                    </div>
-                  `).join("")}
-                </div>
-
-              </div>
             </div>
-          `).join("")}
+
+          </div>
 
         </div>
+      `).join("")}
 
-        <button type="button"
-          class="primary"
-          data-addfilm="${p.id}"
-          onclick="openFilmModal('${p.id}')"
-          ${!p.debut || !p.fin ? "disabled title='Saisis les dates'" : ""}>
-          + Film
-        </button>
+    </div>
 
-      </div>
-    `;
+    <!-- ACTION AJOUT FILM -->
+    <button type="button"
+      class="primary"
+      onclick="openFilmModal('${p.id}')"
+      ${!p.debut || !p.fin ? "disabled title='Saisis les dates dans la modale période'" : ""}>
+      + Film
+    </button>
+
+  </div>
+`;
 
     container.appendChild(div);
   });
@@ -628,13 +594,25 @@ function openPeriodeModal(id = null) {
 
     <div style="margin-top:15px; display:flex; gap:10px;">
       <button onclick="closeModal()">Annuler</button>
-      <button class="primary" onclick="savePeriodeModal('${id || ""}')">
+
+      <button id="btn-save-periode" class="primary" disabled>
         Valider
       </button>
     </div>
   `;
 
   showModal();
+
+  document.getElementById("m-debut")
+    .addEventListener("input", validatePeriodeModal);
+
+  document.getElementById("m-fin")
+    .addEventListener("input", validatePeriodeModal);
+
+  document.getElementById("btn-save-periode")
+    .addEventListener("click", () => savePeriodeModal(id));
+
+  validatePeriodeModal();
 }
 
 function savePeriodeModal(id) {
@@ -659,13 +637,16 @@ function savePeriodeModal(id) {
   render();
 }
 
-function openFilmModal(periodeId, filmId = null) {
+function openFilmModal(periodeId, filmId = "") {
 
   const periode = state.periodes.find(p => p.id === periodeId);
+  if (!periode) return;
 
   const film = filmId
     ? periode.films.find(f => f.id === filmId)
     : { titre: "", age: "", horaires: {} };
+
+  const dates = getDates(periode.debut, periode.fin);
 
   const modalBody = document.getElementById("modal-body");
 
@@ -677,6 +658,30 @@ function openFilmModal(periodeId, filmId = null) {
 
     <label>Âge</label>
     <input id="m-age" value="${film.age}" />
+
+    <hr style="margin:15px 0;" />
+
+    <h4>Horaires des séances</h4>
+
+    <div class="horaires-modal">
+
+      ${dates.map(date => `
+        <div class="horaire-day">
+
+          <label>${date}</label>
+
+          <input
+            type="text"
+            data-date="${date}"
+            class="m-horaire"
+            placeholder="ex: 14:00, 20:30"
+            value="${(film.horaires?.[date] || []).join(", ")}"
+          />
+
+        </div>
+      `).join("")}
+
+    </div>
 
     <div style="margin-top:15px; display:flex; gap:10px;">
       <button onclick="closeModal()">Annuler</button>
@@ -725,6 +730,24 @@ function saveFilmModal(periodeId, filmId = "") {
 
   closeModal();
   render();
+}
+
+function validatePeriodeModal() {
+  const debutEl = document.getElementById("m-debut");
+  const finEl = document.getElementById("m-fin");
+  const btn = document.getElementById("btn-save-periode");
+
+  if (!debutEl || !finEl || !btn) return;
+
+  const debut = debutEl.value;
+  const fin = finEl.value;
+
+  const isValid =
+    debut !== "" &&
+    fin !== "" &&
+    new Date(fin) >= new Date(debut);
+
+  btn.disabled = !isValid;
 }
 
 function showModal() {
