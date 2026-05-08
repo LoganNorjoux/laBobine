@@ -2,6 +2,8 @@ const state = {
   periodes: []
 };
 
+let draggedFilmId = null;
+
 // =======================
 // UTIL
 // =======================
@@ -184,111 +186,95 @@ function render() {
     div.className = "periode";
 
     div.innerHTML = `
-      <div class="periode-header" onclick="togglePeriode('${p.id}')">
-        <h3 data-title-id="${p.id}">
-          ${p.debut && p.fin ? `Période (${p.debut} → ${p.fin})` : "Période"}
-        </h3>
+  <div class="periode-header" onclick="togglePeriode('${p.id}')">
+    
+    <h3 data-title-id="${p.id}">
+  ${
+    p.debut && p.fin
+      ? `${formatDateFR(p.debut)} → ${formatDateFR(p.fin)}`
+      : ""
+  }
+</h3>
 
-        <button type="button"
-		  class="delete-btn"
-		  onclick="event.stopPropagation(); removePeriode('${p.id}')">
+    <div style="display:flex; gap:6px; align-items:center;">
 
-		  <span class="material-symbols-outlined">
-			delete
-		  </span>
+      <button type="button"
+  class="edit-btn"
+  style="cursor: pointer"
+  onclick="event.stopPropagation(); openPeriodeModal('${p.id}')">
+  ✏️
+</button>
 
-		</button>
-      </div>
+<button type="button"
+  class="delete-btn"
+  style="cursor: pointer"
+  onclick="event.stopPropagation(); removePeriode('${p.id}')">
+  🗑️
+</button>
 
-      <div class="periode-body ${p.ui.open ? "" : "collapsed"}">
+    </div>
 
-        <div class="two-cols">
-          <div class="field-item">
-            <label>Début</label>
-            <input type="date"
-              value="${p.debut}"
-              data-periode-id="${p.id}"
-              data-field="debut" />
-          </div>
+  </div>
 
-          <div class="field-item">
-            <label>Fin</label>
-            <input type="date"
-              value="${p.fin}"
-              data-periode-id="${p.id}"
-              data-field="fin" />
-          </div>
-        </div>
+  <div class="periode-body ${p.ui.open ? "" : "collapsed"}">
 
-        <div class="films">
+    <!-- RÉCAP FILMS -->
+    <div class="films">
 
-          ${p.films.map(f => `
-            <div class="film">
+      ${p.films.map(f => `
+        <div class="film"
+  data-film-id="${f.id}"
+  draggable="true"
 
-              <div class="film-header" onclick="toggleFilm('${p.id}','${f.id}')">
-                <h3 data-film-title-id="${f.id}">
-                  ${f.titre || "Film"}${f.age ? ` (${f.age})` : ""}
-                </h3>
+  ondragstart="handleDragStart(event, '${p.id}', '${f.id}')"
 
-				<button type="button"
-				  class="delete-btn"
-				  onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
+  ondragend="handleDragEnd()"
 
-				  <span class="material-symbols-outlined">
-					delete
-				  </span>
+  ondragover="handleDragOver(event)"
 
-				</button>
-              </div>
-              <div class="film-body ${f.ui.open ? "" : "collapsed"}">
+  ondrop="handleDrop(event, '${p.id}', '${f.id}')">
 
-                <div class="two-cols">
-                  <div class="field-item">
-                    <label>Titre</label>
-                    <input value="${f.titre}"
-                      data-film-id="${f.id}"
-                      data-periode-id="${p.id}"
-                      data-field="titre" />
-                  </div>
+  <div class="film-header"
+    onclick="toggleFilm('${p.id}','${f.id}')">
 
-                  <div class="field-item">
-                    <label>Âge</label>
-                    <input value="${f.age}"
-                      data-film-id="${f.id}"
-                      data-periode-id="${p.id}"
-                      data-field="age" />
-                  </div>
-                </div>
+    <h3 data-film-title-id="${f.id}">
+      ${f.titre || "Film"}${f.age ? ` (${f.age})` : ""}
+    </h3>
 
-                <div class="horaires">
-                  ${dates.map(d => `
-                    <div class="field-item">
-                      <label>${d}</label>
-                      <input value="${(f.horaires[d] || []).join(", ")}"
-                        data-film-id="${f.id}"
-                        data-periode-id="${p.id}"
-                        data-date="${d}"
-                        data-field="horaire" />
-                    </div>
-                  `).join("")}
-                </div>
+    <div style="display:flex; gap:6px; align-items:center;">
 
-              </div>
-            </div>
-          `).join("")}
+      <button type="button"
+        class="edit-btn"
+		style="cursor: pointer"
+        onclick="event.stopPropagation(); openFilmModal('${p.id}','${f.id}')">
+        ✏️
+      </button>
 
-        </div>
+      <button type="button"
+        class="delete-btn"
+style="cursor: pointer"
+        onclick="event.stopPropagation(); removeFilm('${p.id}','${f.id}')">
+        🗑️
+      </button>
 
-        <button type="button"
-          class="primary"
-          data-addfilm="${p.id}"
-          onclick="addFilm('${p.id}')"
-          ${!p.debut || !p.fin ? "disabled title='Saisis les dates'" : ""}>
-          + Film
-        </button>
+    </div>
 
-      </div>
-    `;
+  </div>
+</div>
+      `).join("")}
+
+    </div>
+
+    <!-- ACTION AJOUT FILM -->
+    <button type="button"
+      class="primary"
+      onclick="openFilmModal('${p.id}')"
+      ${!p.debut || !p.fin ? "disabled title='Saisis les dates dans la modale période'" : ""}>
+      + Film
+    </button>
+
+  </div>
+`;
 
     container.appendChild(div);
   });
@@ -556,9 +542,10 @@ function renderPDFPreview() {
 
               ${f.age
                 ? `
-                  <div class="film-age">
-                    ${f.age}
-                  </div>
+                  <div class="film-age"
+     style="background:${getAgeColor(f.age)}">
+  ${f.age}
+</div>
                 `
                 : ""
               }
@@ -607,4 +594,383 @@ function renderPDFPreview() {
 
 function exportPDF() {
   window.print();
+}
+
+function openPeriodeModal(id = null) {
+  const isEdit = !!id;
+  const periode = isEdit
+    ? state.periodes.find(p => p.id === id)
+    : { debut: "", fin: "" };
+
+  const modalBody = document.getElementById("modal-body");
+
+  modalBody.innerHTML = `
+    <h3>${isEdit ? "Modifier période" : "Nouvelle période"}</h3>
+
+    <div class="two-cols">
+
+  <div class="field-item">
+    <label>Début</label>
+    <input id="m-debut" type="date" value="${periode.debut}" />
+  </div>
+
+  <div class="field-item">
+    <label>Fin</label>
+    <input id="m-fin" type="date" value="${periode.fin}" />
+  </div>
+
+</div>
+
+    <div class="modal-actions">
+
+  <button onclick="closeModal()">
+    Annuler
+  </button>
+
+  <button id="btn-save-periode" class="primary" disabled>
+    Valider
+  </button>
+
+</div>
+  `;
+
+  showModal();
+
+  document.getElementById("m-debut")
+    .addEventListener("input", validatePeriodeModal);
+
+  document.getElementById("m-fin")
+    .addEventListener("input", validatePeriodeModal);
+
+  document.getElementById("btn-save-periode")
+    .addEventListener("click", () => savePeriodeModal(id));
+
+  validatePeriodeModal();
+}
+
+function savePeriodeModal(id) {
+  const debut = document.getElementById("m-debut").value;
+  const fin = document.getElementById("m-fin").value;
+
+  if (id) {
+    const p = state.periodes.find(p => p.id === id);
+    p.debut = debut;
+    p.fin = fin;
+  } else {
+    state.periodes.push({
+      id: createId(),
+      debut,
+      fin,
+      films: [],
+      ui: { open: true }
+    });
+  }
+
+  closeModal();
+  render();
+}
+
+function openFilmModal(periodeId, filmId = "") {
+
+  const periode = state.periodes.find(p => p.id === periodeId);
+  if (!periode) return;
+
+  const film = filmId
+    ? periode.films.find(f => f.id === filmId)
+    : { titre: "", age: "", horaires: {} };
+
+  const dates = getDates(periode.debut, periode.fin);
+
+  const modalBody = document.getElementById("modal-body");
+
+  modalBody.innerHTML = `
+    <h3>${filmId ? "Modifier film" : "Nouveau film"}</h3>
+
+    <div class="two-cols">
+
+  <div class="field-item">
+    <label>Titre</label>
+    <input id="m-titre" value="${film.titre}" />
+  </div>
+
+  <div class="field-item">
+    <label>Âge</label>
+    <select id="m-age">
+
+  <option value=""></option>
+
+  ${Array.from({ length: 14 }, (_, i) => i + 3).map(age => `
+    <option value="${age}" ${film.age == age ? "selected" : ""}>
+      ${age} ans
+    </option>
+  `).join("")}
+
+</select>
+  </div>
+
+</div>
+
+    <hr style="margin:15px 0;" />
+
+    <h4>Horaires des séances</h4>
+
+    <div class="horaires-modal">
+
+      ${dates.map(date => `
+        <div class="horaire-day">
+
+          <label title="${date}">${formatDateFR(date)}</label>
+
+          <input
+            type="text"
+            data-date="${date}"
+            class="m-horaire"
+            value="${(film.horaires?.[date] || []).join(", ")}"
+          />
+
+        </div>
+      `).join("")}
+
+    </div>
+
+    <div class="modal-actions">
+
+  <button onclick="closeModal()">
+    Annuler
+  </button>
+
+  <button class="primary" onclick="saveFilmModal('${periodeId}','${filmId || ""}')">
+    Valider
+  </button>
+
+</div>
+  `;
+
+  showModal();
+}
+
+function saveFilmModal(periodeId, filmId = "") {
+
+  const periode = state.periodes.find(p => p.id === periodeId);
+  if (!periode) return;
+
+  const titre = document.getElementById("m-titre").value;
+  const age = document.getElementById("m-age").value;
+
+  // =======================
+  // EDIT EXISTING FILM
+  // =======================
+  if (filmId) {
+
+    const film = periode.films.find(f => f.id === filmId);
+    if (!film) return;
+
+    film.titre = titre;
+    film.age = age;
+  }
+
+  // =======================
+  // CREATE NEW FILM
+  // =======================
+  else {
+
+    periode.films.push({
+      id: createId(),
+      titre,
+      age,
+      horaires: {},
+      ui: { open: true }
+    });
+  }
+
+  closeModal();
+  render();
+}
+
+function validatePeriodeModal() {
+  const debutEl = document.getElementById("m-debut");
+  const finEl = document.getElementById("m-fin");
+  const btn = document.getElementById("btn-save-periode");
+
+  if (!debutEl || !finEl || !btn) return;
+
+  const debut = debutEl.value;
+  const fin = finEl.value;
+
+  const isValid =
+    debut !== "" &&
+    fin !== "" &&
+    new Date(fin) >= new Date(debut);
+
+  btn.disabled = !isValid;
+}
+
+// =======================
+// DRAG & DROP FILMS
+// =======================
+
+let dragPreviewPosition = null;
+
+function handleDragStart(event, periodeId, filmId) {
+
+  draggedFilmId = filmId;
+
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/plain", filmId);
+
+  event.currentTarget.classList.add("dragging");
+}
+
+function handleDragEnd() {
+
+  document
+    .querySelectorAll(".film")
+    .forEach(el => {
+      el.classList.remove(
+        "drag-over-top",
+        "drag-over-bottom",
+        "dragging"
+      );
+    });
+
+  dragPreviewPosition = null;
+}
+
+function handleDragOver(event) {
+
+  event.preventDefault();
+
+  const filmEl = event.currentTarget;
+  const rect = filmEl.getBoundingClientRect();
+
+  const offsetY = event.clientY - rect.top;
+  const isTop = offsetY < rect.height / 2;
+
+  document
+    .querySelectorAll(".film")
+    .forEach(el => {
+      el.classList.remove(
+        "drag-over-top",
+        "drag-over-bottom"
+      );
+    });
+
+  if (isTop) {
+    filmEl.classList.add("drag-over-top");
+  } else {
+    filmEl.classList.add("drag-over-bottom");
+  }
+
+  dragPreviewPosition = {
+    targetFilmId: filmEl.dataset.filmId,
+    position: isTop ? "before" : "after"
+  };
+}
+
+function handleDrop(event, periodeId, targetFilmId) {
+
+  event.preventDefault();
+
+  const periode = state.periodes.find(p => p.id === periodeId);
+  if (!periode) return;
+
+  const sourceIndex =
+    periode.films.findIndex(f => f.id === draggedFilmId);
+
+  const targetIndex =
+    periode.films.findIndex(f => f.id === targetFilmId);
+
+  if (sourceIndex === -1 || targetIndex === -1) return;
+
+  const [movedFilm] =
+    periode.films.splice(sourceIndex, 1);
+
+  let insertIndex = targetIndex;
+
+  if (
+    dragPreviewPosition &&
+    dragPreviewPosition.position === "after"
+  ) {
+    insertIndex++;
+  }
+
+  // correction index après splice
+  if (sourceIndex < insertIndex) {
+    insertIndex--;
+  }
+
+  periode.films.splice(insertIndex, 0, movedFilm);
+
+  dragPreviewPosition = null;
+
+  render();
+}
+
+function showModal() {
+  const modal = document.getElementById("modal");
+  modal.classList.remove("hidden");
+
+  document.body.classList.add("modal-open");
+
+  // focus auto après rendu DOM
+  setTimeout(() => {
+    const firstInput = modal.querySelector("input, textarea, select");
+    if (firstInput) {
+      firstInput.focus();
+      firstInput.select?.(); // utile pour les inputs texte
+    }
+  }, 0);
+}
+
+function closeModal() {
+
+  document
+    .getElementById("modal")
+    .classList.add("hidden");
+
+  document.body.classList.remove("modal-open");
+}
+
+function formatDateFR(dateStr) {
+  if (!dateStr) return "";
+
+  const d = new Date(dateStr);
+
+  return new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long"
+  }).format(d);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const modal = document.getElementById("modal");
+    if (!modal) return;
+
+    if (!modal.classList.contains("hidden")) {
+      closeModal();
+    }
+  }
+});
+
+document.getElementById("modal").addEventListener("click", (e) => {
+  if (e.target.id === "modal") {
+    closeModal();
+  }
+});
+
+function getAgeColor(age) {
+
+  const min = 3;
+  const max = 16;
+
+  const a = Math.max(min, Math.min(max, Number(age)));
+
+  const ratio = (a - min) / (max - min);
+
+  const hue = 210 - (210 * ratio); 
+  // 210 = bleu, 0 = rouge
+
+  return `hsl(${hue}, 75%, 45%)`;
 }

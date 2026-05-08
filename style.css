@@ -145,6 +145,7 @@ select:focus {
 /* =======================
    HEADERS
 ======================= */
+
 .periode-header,
 .film-header {
   display: flex;
@@ -155,10 +156,18 @@ select:focus {
   width: 100%;
   min-width: 0;
 
-  cursor: pointer;
   user-select: none;
 }
 
+/* période cliquable */
+.periode-header {
+  cursor: pointer;
+}
+
+/* film hérite du drag */
+.film-header {
+  cursor: inherit;
+}
 /* =======================
    GRID INPUTS
 ======================= */
@@ -634,8 +643,6 @@ button:disabled {
   height: 24px;
 
   border-radius: 999px;
-
-  background: #c62828;
   color: white;
 
   display: flex;
@@ -672,4 +679,327 @@ button:disabled {
 
   font-size: 18px;
   font-weight: 900;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+
+  width: min(700px, 92vw);
+}
+
+.edit-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  color: var(--color-primary);
+
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    color 160ms ease;
+}
+
+.edit-btn:hover {
+  background: rgba(198, 40, 40, 0.12);
+  transform: scale(1.05);
+}
+
+.edit-btn .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.horaires-modal {
+  display: grid;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.horaire-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fafafa;
+}
+
+.horaire-day label {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* ================
+   FILM INTERACTION
+======================= */
+
+.film {
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+
+  cursor: grab;
+}
+
+.film:hover {
+
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(198, 40, 40, 0.35);
+
+  background:
+    rgba(255,255,255,0.78);
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.06);
+}
+
+.film:active {
+  cursor: grabbing;
+}
+
+/* uniformise tous les curseurs internes */
+.film * {
+  cursor: inherit;
+}
+
+/* drag over */
+.film.drag-over {
+
+  border-color: var(--color-primary);
+
+  background:
+    rgba(198, 40, 40, 0.06);
+
+  box-shadow:
+    0 0 0 2px rgba(198, 40, 40, 0.12);
+}
+
+
+/* =======================
+   DRAG & DROP
+======================= */
+
+.film {
+  cursor: grab;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+.film:hover {
+  background: rgba(198, 40, 40, 0.04);
+  border-color: rgba(198, 40, 40, 0.25);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.08);
+}
+
+.film.dragging {
+  opacity: 0.35;
+}
+
+.film.drag-over {
+  border: 2px dashed var(--color-primary);
+  background: rgba(198, 40, 40, 0.08);
+
+  transform: scale(1.01);
+}
+
+/* =======================
+   DRAG & DROP PREVIEW
+======================= */
+
+.film {
+  position: relative;
+  cursor: grab;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.film:hover {
+  background: #fdfdfd;
+  border-color: rgba(198, 40, 40, 0.35);
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.06);
+}
+
+.film.dragging {
+  opacity: 0.45;
+}
+
+.film.drag-over-top::before,
+.film.drag-over-bottom::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+.film.drag-over-top::before {
+  top: -6px;
+}
+
+.film.drag-over-bottom::after {
+  bottom: -6px;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* =======================
+   ACTION BUTTONS
+======================= */
+
+.edit-btn,
+.delete-btn {
+
+  width: 32px;
+  height: 32px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  font-size: 14px;
+  line-height: 1;
+
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
+
+  flex-shrink: 0;
+}
+
+/* EDIT */
+
+.edit-btn {
+  color: var(--color-text);
+}
+
+.edit-btn:hover {
+
+  background: #f5f5f5;
+  border-color: #cfcfcf;
+
+  transform: translateY(-1px);
+}
+
+/* DELETE */
+
+.delete-btn {
+  color: #b42318;
+}
+
+.delete-btn:hover {
+
+  background: #fef3f2;
+  border-color: #f04438;
+
+  transform: translateY(-1px);
+}
+
+/* ACTIVE */
+
+.edit-btn:active,
+.delete-btn:active {
+  transform: scale(0.96);
+}
+
+/* FOCUS */
+
+.edit-btn:focus-visible,
+.delete-btn:focus-visible {
+
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(198, 40, 40, 0.12);
+}
+
+.horaires-modal {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.horaire-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fafafa;
+}
+
+.modal-content input {
+  font-size: 13px;
+  padding: 8px;
+}
+
+.modal-content .two-cols {
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 18px;
 }

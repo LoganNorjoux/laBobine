@@ -41,7 +41,7 @@
     <h2>Programmation</h2>
 
     <!-- ACTION PRINCIPALE -->
-    <button type="button" class="primary" onclick="addPeriode()">
+    <button type="button" class="primary" onclick="openPeriodeModal()">
       + Nouvelle période
     </button>
 
@@ -63,6 +63,11 @@
 
 </div>
 
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <div id="modal-body"></div>
+  </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
