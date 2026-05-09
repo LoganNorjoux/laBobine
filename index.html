@@ -23,12 +23,16 @@
 
       <div id="menuDropdown" class="menu-dropdown hidden">
 
+		<button onclick="downloadPDF()">
+		  📄 Télécharger le PDF
+		</button>
+		
         <button type="button" onclick="document.getElementById('importFile').click()">
-          Import JSON
+          [Technique] Import JSON
         </button>
 
         <button type="button" onclick="exportJSON()">
-          Export JSON
+          [Technique] Export JSON
         </button>
 
       </div>
@@ -69,5 +73,6 @@
   </div>
 </div>
 <script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

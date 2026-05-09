@@ -592,10 +592,6 @@ function renderPDFPreview() {
   preview.innerHTML = html;
 }
 
-function exportPDF() {
-  window.print();
-}
-
 function openPeriodeModal(id = null) {
   const isEdit = !!id;
   const periode = isEdit
@@ -973,4 +969,39 @@ function getAgeColor(age) {
   // 210 = bleu, 0 = rouge
 
   return `hsl(${hue}, 75%, 45%)`;
+}
+
+function downloadPDF() {
+
+  renderPDFPreview();
+
+  const element = document.getElementById("pdf-preview");
+
+  const options = {
+
+    margin: 0,
+
+    filename: "programmation-cinema.pdf",
+
+    image: {
+      type: "jpeg",
+      quality: 1
+    },
+
+    html2canvas: {
+      scale: 2,
+      useCORS: true
+    },
+
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait"
+    }
+  };
+
+  html2pdf()
+    .set(options)
+    .from(element)
+    .save();
 }
