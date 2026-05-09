@@ -753,9 +753,22 @@ function saveFilmModal(periodeId, filmId = "") {
   const titre = document.getElementById("m-titre").value;
   const age = document.getElementById("m-age").value;
 
-  // =======================
-  // EDIT EXISTING FILM
-  // =======================
+  // 👉 récupère tous les inputs horaires
+  const horairesInputs = document.querySelectorAll(".m-horaire");
+
+  const horaires = {};
+
+  horairesInputs.forEach(input => {
+    const date = input.dataset.date;
+
+    const values = input.value
+      .split(",")
+      .map(v => v.trim())
+      .filter(Boolean);
+
+    horaires[date] = values;
+  });
+
   if (filmId) {
 
     const film = periode.films.find(f => f.id === filmId);
@@ -763,18 +776,14 @@ function saveFilmModal(periodeId, filmId = "") {
 
     film.titre = titre;
     film.age = age;
-  }
-
-  // =======================
-  // CREATE NEW FILM
-  // =======================
-  else {
+    film.horaires = horaires;
+  } else {
 
     periode.films.push({
       id: createId(),
       titre,
       age,
-      horaires: {},
+      horaires,
       ui: { open: true }
     });
   }
