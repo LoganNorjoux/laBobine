@@ -28,11 +28,11 @@
 		</button>
 		
         <button type="button" onclick="document.getElementById('importFile').click()">
-          [Technique] Import JSON
+          Export JSON
         </button>
 
         <button type="button" onclick="exportJSON()">
-          [Technique] Export JSON
+          Import JSON
         </button>
 
       </div>
@@ -42,7 +42,19 @@
     <input type="file" id="importFile" accept="application/json" hidden />
 
     <!-- HEADER -->
-    <h2>Programmation</h2>
+    <div class="page-title">
+
+  <h2>Programmation</h2>
+
+  <button
+    type="button"
+    class="help-btn"
+    onclick="openGuideModal()"
+    title="Guide utilisateur">
+    ?
+  </button>
+
+</div>
 
     <!-- ACTION PRINCIPALE -->
     <button type="button" class="primary" onclick="openPeriodeModal()">

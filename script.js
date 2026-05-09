@@ -1005,3 +1005,94 @@ function downloadPDF() {
     .from(element)
     .save();
 }
+
+const guideMarkdown = `
+## 1. Créer une période
+- Clique sur **+ Nouvelle période**
+- Renseigne les dates
+- Valide
+
+## 2. Ajouter un film
+- Clique sur **+ Film**
+- Renseigne le titre
+- Choisis l’âge
+- Saisis les horaires
+
+Exemple :
+**14:00, 17:30, 20:45**
+
+## 3. Modifier ou supprimer
+- ✏️ Modifier un élément
+- 🗑️ Supprimer un élément
+
+## 4. Réorganiser les films
+Glisse-dépose les films pour changer leur ordre.
+
+## 5. Vérifier la preview
+La colonne de droite affiche le rendu PDF final en temps réel.
+
+## 6. Exporter le PDF
+Menu ⋯
+→ Télécharger le PDF
+
+## 7. Sauvegarder un projet
+Menu ⋯
+→ Export JSON
+
+## 8. Recharger un projet
+Menu ⋯
+→ Import JSON
+`;
+
+
+
+function openGuideModal() {
+
+  const modalBody = document.getElementById("modal-body");
+
+  modalBody.innerHTML = `
+  <div class="modal-topbar">
+    <h3>Guide utilisateur</h3>
+	  <button
+    class="modal-close-btn"
+    onclick="closeModal()"
+    title="Fermer">
+    ✕
+  </button>
+
+    <div class="guide-content">
+      ${renderMarkdown(guideMarkdown)}
+    </div>
+	</div>
+  `;
+
+  showModal();
+}
+
+function escapeHtml(text) {
+
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function renderMarkdown(md) {
+  return md
+    // titres
+    .replace(/^### (.*$)/gm, "<h3>$1</h3>")
+    .replace(/^## (.*$)/gm, "<h2>$1</h2>")
+    .replace(/^# (.*$)/gm, "<h1>$1</h1>")
+
+    // gras
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+
+    // listes
+    .replace(/^- (.*$)/gm, "<li>$1</li>")
+
+    // blocs de code simples (exemple horaires)
+    .replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>");
+
+    // sauts de ligne
+    //.replace(/\n/g, "<br>");
+}
