@@ -1,0 +1,263 @@
+@import 'tailwindcss';
+
+/* Roboto + Material Symbols embarqués (offline) */
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+@import 'material-symbols/rounded.css';
+
+/* ---- Design tokens Material Design 3 ---- */
+:root {
+  --md-primary: #9a1b2f;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #ffdada;
+  --md-on-primary-container: #40000a;
+  --md-secondary-container: #fce0df;
+  --md-on-secondary-container: #5c1417;
+  --md-surface: #fdf8f7;
+  --md-surface-low: #f7f2f1;
+  --md-surface-container: #f1eceb;
+  --md-surface-high: #ebe6e5;
+  --md-on-surface: #221a1a;
+  --md-on-surface-variant: #534343;
+  --md-outline: #857372;
+  --md-outline-variant: #d8c1c0;
+  --md-error: #ba1a1a;
+
+  --md-shadow-1: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+  --md-shadow-2: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 6px 2px rgb(0 0 0 / 0.15);
+
+  font-family: Roboto, system-ui, sans-serif;
+}
+
+body {
+  background: var(--md-surface-low);
+  color: var(--md-on-surface);
+}
+
+@layer components {
+  /* Boutons MD3 */
+  .btn {
+    @apply inline-flex items-center gap-1.5 rounded-full px-4 h-10 text-sm font-medium
+      transition-shadow select-none cursor-pointer;
+  }
+  .btn-filled {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+  .btn-filled:hover { box-shadow: var(--md-shadow-1); filter: brightness(1.08); }
+  .btn-tonal {
+    background: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+  }
+  .btn-tonal:hover { box-shadow: var(--md-shadow-1); }
+  .btn-outlined {
+    border: 1px solid var(--md-outline);
+    color: var(--md-primary);
+    background: transparent;
+  }
+  .btn-outlined:hover { background: color-mix(in srgb, var(--md-primary) 8%, transparent); }
+  .btn-text { color: var(--md-primary); background: transparent; padding: 0 12px; }
+  .btn-text:hover { background: color-mix(in srgb, var(--md-primary) 8%, transparent); }
+
+  .icon-btn {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-full transition-colors
+      disabled:opacity-38 select-none cursor-pointer;
+    color: var(--md-on-surface-variant);
+  }
+  .icon-btn:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--md-on-surface-variant) 10%, transparent);
+  }
+  .icon-btn:disabled { opacity: 0.38; }
+
+  /* Inputs MD3 — outlined */
+  .md-field {
+    @apply w-full rounded px-3 h-10 text-sm outline-none transition-colors;
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    color: var(--md-on-surface);
+  }
+  .md-field:hover { border-color: var(--md-on-surface); }
+  .md-field:focus { border-color: var(--md-primary); border-width: 2px; padding: 0 11px; }
+  .md-field::placeholder { color: var(--md-on-surface-variant); }
+
+  select.md-field { appearance: auto; }
+
+  /* Onglets MD3 */
+  .tab {
+    @apply flex-1 py-3 text-sm font-medium text-center cursor-pointer transition-colors;
+    color: var(--md-on-surface-variant);
+    border-bottom: 2px solid transparent;
+  }
+  .tab:hover { color: var(--md-on-surface); }
+  .tab-active { color: var(--md-primary); border-bottom-color: var(--md-primary); }
+
+  /* Cartes */
+  .md-card {
+    background: var(--md-surface);
+    border-radius: 16px;
+    box-shadow: var(--md-shadow-1);
+    border: 1px solid var(--md-outline-variant);
+  }
+
+  .md-chip {
+    @apply inline-flex items-center justify-center h-8 rounded-lg px-3 text-xs font-medium
+      cursor-pointer select-none;
+    border: 1px solid var(--md-outline);
+    color: var(--md-on-surface-variant);
+  }
+  .md-chip:hover { background: color-mix(in srgb, var(--md-on-surface-variant) 8%, transparent); }
+  .md-chip-star { color: #b8860b; border-color: #b8860b; background: #fff8e1; }
+
+  /* Switch MD3 */
+  .md-switch {
+    @apply relative inline-block w-13 h-8 rounded-full cursor-pointer transition-colors;
+    width: 52px; height: 32px;
+    background: var(--md-surface-high);
+    border: 2px solid var(--md-outline);
+  }
+  .md-switch::after {
+    content: '';
+    position: absolute; top: 50%; left: 4px; transform: translateY(-50%);
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--md-outline);
+    transition: all .2s;
+  }
+  input:checked + .md-switch {
+    background: var(--md-primary);
+    border-color: var(--md-primary);
+  }
+  input:checked + .md-switch::after { left: 28px; width: 24px; height: 24px; background: #fff; }
+}
+
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+}
+.icon-btn .material-symbols-rounded { font-size: 20px; }
+.btn .material-symbols-rounded { font-size: 18px; }
+
+/* ---- Affiche A4 (modèle papier — inchangé) ---- */
+
+.poster-a4 {
+  width: 210mm;
+  height: 297mm;
+  background: #fdf6d8;
+  color: #111;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 6mm 7mm 4mm;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.poster-header {
+  background: #c8102e;
+  color: #fff;
+  border-radius: 4mm;
+  text-align: center;
+  padding: 4mm 2mm;
+  margin-bottom: 2.5mm;
+}
+.poster-title { display: flex; align-items: baseline; justify-content: center; gap: 4mm; }
+.poster-prefix { font-size: 7mm; letter-spacing: 2mm; }
+.poster-title h1 { font-size: 12mm; font-weight: 800; letter-spacing: 1mm; margin: 0; }
+.poster-city { font-size: 7mm; letter-spacing: 1.5mm; }
+
+.poster-tarifs {
+  font-size: 3mm;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0 4mm;
+  padding: 0 1mm;
+}
+.facebook { font-weight: 600; }
+
+.poster-notice {
+  background: #fff3b0;
+  font-size: 2.9mm;
+  font-style: italic;
+  text-align: center;
+  margin: 1.5mm 0;
+  padding: 0.5mm;
+}
+
+.week { margin-top: 1mm; }
+.week-title {
+  color: #c8102e;
+  font-weight: 800;
+  font-size: 4.6mm;
+  letter-spacing: 0.5mm;
+  margin: 0 0 1mm;
+}
+
+table.prog {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 3.2mm;
+}
+table.prog th,
+table.prog td {
+  border: 0.35mm solid #333;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.8mm 0.5mm;
+  height: 7mm;
+}
+table.prog thead th {
+  background: #c8102e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 3mm;
+  height: 5mm;
+}
+.th-month { font-weight: 400; margin-left: 0.5mm; }
+table.prog .col-film { width: 34%; font-weight: 700; text-align: center; }
+.film-title { text-transform: uppercase; }
+.vost { font-weight: 400; }
+.placeholder { color: #999; }
+.film-tag { font-size: 2.6mm; font-weight: 400; font-style: italic; }
+
+.age-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #d4378e;
+  color: #fff;
+  border-radius: 50%;
+  width: 6.5mm;
+  height: 6.5mm;
+  font-size: 3mm;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: 1mm;
+  vertical-align: middle;
+}
+.age-unit { font-size: 1.6mm; font-weight: 400; }
+
+.session { font-weight: 600; line-height: 1.2; }
+
+.poster-footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 3.4mm;
+}
+.footer-line1 { font-weight: 800; font-size: 4.4mm; }
+.footer-line2 { font-weight: 700; }
+.footer-credit { font-size: 1.8mm; color: #555; margin-top: 1mm; }
+
+.poster-wrap {
+  transform-origin: top center;
+  zoom: 0.9;
+}
+
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  body * { visibility: hidden; }
+  .poster-a4, .poster-a4 * { visibility: visible; }
+  .poster-a4 { position: absolute; left: 0; top: 0; margin: 0; }
+}
