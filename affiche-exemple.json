@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "config": {
+    "tariffs": [
+      "TARIFS : Adulte : 6,00 € • Réduit : 4,50 € • -14 ans : 4 €",
+      "* Le dimanche à 11 h : 4 € • Carte 10 Entrées : 45 €"
+    ],
+    "notice": "Le premier mardi soir de chaque mois, une place de cinéma à gagner par tirage au sort."
+  },
+  "weeks": [
+    {
+      "startDate": "2025-10-29",
+      "endDate": "2025-11-04",
+      "films": [
+        {
+          "id": "f1",
+          "title": "ARCO",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 0, "time": "14h30", "star": false },
+            { "dayIndex": 3, "time": "14h30", "star": false },
+            { "dayIndex": 4, "time": "16h45", "star": false }
+          ]
+        },
+        {
+          "id": "f2",
+          "title": "C'ÉTAIT MIEUX DEMAIN",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 0, "time": "18h00", "star": false },
+            { "dayIndex": 3, "time": "14h30", "star": false }
+          ]
+        },
+        {
+          "id": "f3",
+          "title": "CHIEN 51",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 1, "time": "20h30", "star": false },
+            { "dayIndex": 2, "time": "20h30", "star": false },
+            { "dayIndex": 3, "time": "20h30", "star": false },
+            { "dayIndex": 5, "time": "20h30", "star": false }
+          ]
+        },
+        {
+          "id": "f4",
+          "title": "LE SECRET DES MÉSANGES",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 2, "time": "10h30", "star": false },
+            { "dayIndex": 3, "time": "14h30", "star": false },
+            { "dayIndex": 4, "time": "16h45", "star": false }
+          ]
+        },
+        {
+          "id": "f5",
+          "title": "HOPPER ET LE SECRET DE LA MARMOTTE",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 2, "time": "14h30", "star": false },
+            { "dayIndex": 3, "time": "16h45", "star": false }
+          ]
+        },
+        {
+          "id": "f6",
+          "title": "SUPER GRAND PRIX",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 2, "time": "16h45", "star": false },
+            { "dayIndex": 4, "time": "10h30", "star": false }
+          ]
+        },
+        {
+          "id": "f7",
+          "title": "UN SIMPLE ACCIDENT",
+          "ageRating": "TP",
+          "version": "VOST",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 1, "time": "20h30", "star": false },
+            { "dayIndex": 5, "time": "20h30", "star": false }
+          ]
+        },
+        {
+          "id": "f8",
+          "title": "TIMIOCHE",
+          "ageRating": "3",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 3, "time": "10h30", "star": false }]
+        },
+        {
+          "id": "f9",
+          "title": "PEPPA RENCONTRE LE BÉBÉ AU CINÉMA",
+          "ageRating": "3",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 5, "time": "11h00", "star": true }]
+        },
+        {
+          "id": "f10",
+          "title": "FILM SURPRISE",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "AVANT-PREMIÈRE",
+          "sessions": [{ "dayIndex": 6, "time": "20h30", "star": false }]
+        }
+      ]
+    },
+    {
+      "startDate": "2025-11-05",
+      "endDate": "2025-11-11",
+      "films": [
+        {
+          "id": "g1",
+          "title": "MARCEL ET MONSIEUR PAGNOL",
+          "ageRating": "10",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 0, "time": "18h00", "star": false },
+            { "dayIndex": 6, "time": "14h30", "star": false }
+          ]
+        },
+        {
+          "id": "g2",
+          "title": "KAAMELOTT - DEUXIÈME VOLET [PARTIE 1]",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [
+            { "dayIndex": 0, "time": "20h30", "star": false },
+            { "dayIndex": 3, "time": "20h30", "star": false },
+            { "dayIndex": 4, "time": "14h30", "star": false },
+            { "dayIndex": 5, "time": "20h30", "star": false }
+          ]
+        },
+        {
+          "id": "g3",
+          "title": "NOUVELLE VAGUE",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 1, "time": "20h30", "star": false }]
+        },
+        {
+          "id": "g4",
+          "title": "LE JOUR J",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 2, "time": "18h00", "star": false }]
+        },
+        {
+          "id": "g5",
+          "title": "TRON: ARES",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 2, "time": "20h30", "star": false }]
+        },
+        {
+          "id": "g6",
+          "title": "GABBY ET LA MAISON MAGIQUE",
+          "ageRating": "3",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 3, "time": "17h30", "star": false }]
+        },
+        {
+          "id": "g7",
+          "title": "LA PRINCESSE ET LE ROSSIGNOL",
+          "ageRating": "3",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 5, "time": "11h00", "star": true }]
+        },
+        {
+          "id": "g8",
+          "title": "REGARDE",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 5, "time": "17h30", "star": false }]
+        },
+        {
+          "id": "g9",
+          "title": "DEUX PIANOS",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 5, "time": "20h30", "star": false }]
+        },
+        {
+          "id": "g10",
+          "title": "CHIEN 51",
+          "ageRating": "TP",
+          "version": "VF",
+          "tag": "",
+          "sessions": [{ "dayIndex": 6, "time": "20h30", "star": false }]
+        }
+      ]
+    }
+  ]
+}

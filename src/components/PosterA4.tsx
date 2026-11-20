@@ -60,10 +60,29 @@ export function PosterA4({ poster, exportRoot }: { poster: Poster; exportRoot?: 
   return (
     <div className="poster-a4" data-export={exportRoot ? 'true' : undefined}>
       <header className="poster-header">
+        <svg className="reel" viewBox="0 0 100 100" aria-hidden>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="#fff" strokeWidth="7" />
+          <circle cx="50" cy="50" r="10" fill="#fff" />
+          {[0, 72, 144, 216, 288].map((deg) => (
+            <circle
+              key={deg}
+              cx={50 + 26 * Math.cos((deg * Math.PI) / 180)}
+              cy={50 + 26 * Math.sin((deg * Math.PI) / 180)}
+              r="9"
+              fill="#fff"
+            />
+          ))}
+        </svg>
+        <svg className="filmstrip" viewBox="0 0 140 40" aria-hidden>
+          <path d="M2 38 Q 70 2 138 26" fill="none" stroke="#fff" strokeWidth="14" />
+          {Array.from({ length: 7 }, (_, i) => (
+            <rect key={i} x={8 + i * 19} y={22 - i * 1.6} width="9" height="7" rx="1.5" fill="#c8102e" transform={`rotate(${-12 + i * 1.5} ${8 + i * 19} ${22 - i * 1.6})`} />
+          ))}
+        </svg>
         <div className="poster-title">
-          <span className="poster-prefix">{CINEMA.prefix}</span>
+          <div className="poster-prefix">{CINEMA.prefix}</div>
           <h1>{CINEMA.name}</h1>
-          <span className="poster-city">{CINEMA.city}</span>
+          <div className="poster-city">{CINEMA.city}</div>
         </div>
       </header>
 
@@ -74,16 +93,17 @@ export function PosterA4({ poster, exportRoot }: { poster: Poster; exportRoot?: 
         {CINEMA.facebook && <div className="facebook">f Suivez-nous sur Facebook</div>}
       </div>
 
-      {notice && <div className="poster-notice">{notice}</div>}
+      {notice && <div className="poster-notice"><span>{notice}</span></div>}
 
       {poster.weeks.map((w, i) => (
         <WeekTable key={i} week={w} />
       ))}
 
+      <div className="poster-credit">{CINEMA.footer.credit}</div>
+
       <footer className="poster-footer">
         <div className="footer-line1">{CINEMA.footer.line1}</div>
-        <div className="footer-line2">{CINEMA.footer.line2}</div>
-        <div className="footer-credit">{CINEMA.footer.credit}</div>
+        <div className="footer-line2">Nos sponsors : {CINEMA.footer.line2}</div>
       </footer>
     </div>
   )

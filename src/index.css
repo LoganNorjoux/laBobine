@@ -142,55 +142,115 @@ body {
 .poster-a4 {
   width: 210mm;
   height: 297mm;
-  background: #fdf6d8;
+  background: linear-gradient(180deg, #f6e9bf 0%, #f2e2a8 60%, #eed896 100%);
   color: #111;
   font-family: 'Segoe UI', Arial, sans-serif;
-  padding: 6mm 7mm 4mm;
+  padding: 5mm 7mm 4mm;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
 .poster-header {
-  background: #c8102e;
+  position: relative;
+  background: linear-gradient(105deg, #a50c26 0%, #c8102e 45%, #e01836 100%);
   color: #fff;
   border-radius: 4mm;
   text-align: center;
-  padding: 4mm 2mm;
+  padding: 3.5mm 4mm 4mm;
   margin-bottom: 2.5mm;
+  overflow: hidden;
 }
-.poster-title { display: flex; align-items: baseline; justify-content: center; gap: 4mm; }
-.poster-prefix { font-size: 7mm; letter-spacing: 2mm; }
-.poster-title h1 { font-size: 12mm; font-weight: 800; letter-spacing: 1mm; margin: 0; }
-.poster-city { font-size: 7mm; letter-spacing: 1.5mm; }
+.poster-header .reel {
+  position: absolute;
+  left: 5mm;
+  top: 50%;
+  transform: translateY(-50%) rotate(-18deg);
+  width: 17mm;
+  height: 17mm;
+  opacity: 0.95;
+}
+.poster-header .filmstrip {
+  position: absolute;
+  left: 1mm;
+  bottom: -1mm;
+  width: 34mm;
+  height: 10mm;
+  opacity: 0.9;
+}
+.poster-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 22mm; /* espace pour la bobine à gauche */
+  line-height: 1.05;
+}
+.poster-prefix {
+  font-size: 6mm;
+  font-weight: 700;
+  color: #4a0d18; /* texte sombre sur fond rouge, comme sur le modèle */
+  letter-spacing: 2mm;
+  align-self: flex-end;
+  margin-right: 14mm;
+}
+.poster-title h1 {
+  font-size: 14mm;
+  font-weight: 800;
+  letter-spacing: 1mm;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0.4mm 0.4mm 0 #8a0a20;
+  transform: skewX(-7deg); /* légère inclinaison façon logo */
+}
+.poster-city {
+  font-size: 6mm;
+  font-weight: 700;
+  color: #4a0d18;
+  letter-spacing: 2mm;
+  align-self: flex-end;
+  margin-right: 8mm;
+}
 
 .poster-tarifs {
-  font-size: 3mm;
+  font-size: 3.1mm;
+  font-weight: 600;
+  color: #3d2b00;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0 4mm;
   padding: 0 1mm;
 }
-.facebook { font-weight: 600; }
+.facebook {
+  font-weight: 600;
+  border: 0.3mm solid #3d2b00;
+  border-radius: 1mm;
+  padding: 0.4mm 1.5mm;
+  align-self: center;
+}
 
 .poster-notice {
-  background: #fff3b0;
-  font-size: 2.9mm;
-  font-style: italic;
-  text-align: center;
   margin: 1.5mm 0;
-  padding: 0.5mm;
+  padding: 0.6mm;
+  text-align: center;
+}
+.poster-notice span {
+  background: #d4378e;
+  color: #fff;
+  font-size: 3mm;
+  font-style: italic;
+  padding: 0.8mm 3mm;
 }
 
 .week { margin-top: 1mm; }
 .week-title {
-  color: #c8102e;
+  color: #a5002e;
   font-weight: 800;
-  font-size: 4.6mm;
-  letter-spacing: 0.5mm;
-  margin: 0 0 1mm;
+  font-size: 4.8mm;
+  letter-spacing: 0.4mm;
+  margin: 0 0 0.8mm;
 }
 
 table.prog {
@@ -198,17 +258,18 @@ table.prog {
   border-collapse: collapse;
   table-layout: fixed;
   font-size: 3.2mm;
+  background: #f6ecc4;
 }
 table.prog th,
 table.prog td {
-  border: 0.35mm solid #333;
+  border: 0.4mm solid #111;
   text-align: center;
   vertical-align: middle;
   padding: 0.8mm 0.5mm;
   height: 7mm;
 }
 table.prog thead th {
-  background: #c8102e;
+  background: #7d1024;
   color: #fff;
   font-weight: 700;
   font-size: 3mm;
@@ -241,14 +302,34 @@ table.prog .col-film { width: 34%; font-weight: 700; text-align: center; }
 
 .session { font-weight: 600; line-height: 1.2; }
 
+.poster-credit {
+  position: absolute;
+  right: -34mm;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  font-size: 1.9mm;
+  color: #4a3b00;
+  letter-spacing: 0.2mm;
+}
+
 .poster-footer {
   margin-top: auto;
   text-align: center;
-  font-size: 3.4mm;
+  background: #7d1024;
+  color: #f6ecc4;
+  margin: auto -7mm -4mm; /* bandeau pleine largeur en bas */
+  padding: 1.5mm 0 1.5mm;
 }
-.footer-line1 { font-weight: 800; font-size: 4.4mm; }
-.footer-line2 { font-weight: 700; }
-.footer-credit { font-size: 1.8mm; color: #555; margin-top: 1mm; }
+.footer-line1 {
+  font-weight: 800;
+  font-size: 4.6mm;
+  padding: 0.5mm 0;
+}
+.footer-line2 {
+  font-weight: 700;
+  font-size: 3.8mm;
+  padding: 0.5mm 0;
+}
 
 .poster-wrap {
   transform-origin: top center;
