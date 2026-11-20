@@ -153,6 +153,13 @@ export function fmtDate(iso: string): string {
   return `${d.getDate()} ${MONTHS[d.getMonth()].toLowerCase()} ${d.getFullYear()}`
 }
 
+// "29/10/2025"
+export function fmtDateShort(iso: string): string {
+  const d = new Date(iso + 'T00:00:00')
+  if (isNaN(d.getTime())) return iso
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`
+}
+
 // "MERCREDI 29 OCTOBRE AU MARDI 4 NOVEMBRE 2025"
 export function fmtWeekTitle(week: Week): string {
   const cols = weekDates(week)

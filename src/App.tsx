@@ -39,7 +39,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--md-surface-low)' }}>
       {/* Top app bar */}
       <header
-        className="flex items-center gap-1 px-4 py-2 sticky top-0 z-10"
+        className="flex items-center gap-1 px-4 py-2 sticky top-0 z-10 flex-wrap"
         style={{ background: 'var(--md-surface-container)', boxShadow: 'var(--md-shadow-1)' }}
       >
         <Icon name="theaters" />
@@ -143,8 +143,14 @@ export default function App() {
           />
         </main>
       ) : (
-        <main className="flex-1 overflow-auto flex justify-center p-6">
-          <div className="poster-wrap" style={{ boxShadow: 'var(--md-shadow-2)' }}>
+        <main
+          className="flex-1 overflow-auto flex justify-center p-6"
+          style={{ background: 'var(--md-surface-high)' }}
+        >
+          <div
+            className="poster-wrap self-start"
+            style={{ boxShadow: 'var(--md-shadow-2)' }}
+          >
             <PosterA4 poster={poster} />
           </div>
         </main>
