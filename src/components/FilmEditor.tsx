@@ -54,7 +54,7 @@ export function FilmEditor({
     set({
       sessions: sortSessions([
         ...film.sessions,
-        ...times.map((raw) => ({ dayIndex, time: normalizeTime(raw) ?? raw, star: false })),
+        ...times.map((raw) => ({ dayIndex, time: normalizeTime(raw) ?? raw })),
       ]),
     })
 
@@ -183,14 +183,6 @@ export function FilmEditor({
                     onPick={(v) => updateSession(i, { time: normalizeTime(v) ?? s.time })}
                   />
                 </div>
-                <button
-                  className={`md-chip w-6 px-0 ${s.star ? 'md-chip-star' : ''}`}
-                  style={{ height: 28 }}
-                  title="Ajouter *"
-                  onClick={() => updateSession(i, { star: !s.star })}
-                >
-                  *
-                </button>
                 <button
                   className="icon-btn"
                   style={{ width: 28, height: 28 }}

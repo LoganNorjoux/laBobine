@@ -18,7 +18,6 @@ export type Version = (typeof VERSIONS)[number]
 export const sessionSchema = z.object({
   dayIndex: z.number().int().min(0),
   time: z.string().min(1),
-  star: z.boolean().default(false),
 })
 
 export const filmSchema = z.object({

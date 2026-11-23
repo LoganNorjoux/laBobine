@@ -19,9 +19,9 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 0, "time": "14h30", "star": false },
-            { "dayIndex": 3, "time": "14h30", "star": false },
-            { "dayIndex": 4, "time": "16h45", "star": false }
+            { "dayIndex": 0, "time": "14h30" },
+            { "dayIndex": 3, "time": "14h30" },
+            { "dayIndex": 4, "time": "16h45" }
           ]
         },
         {
@@ -31,8 +31,8 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 0, "time": "18h00", "star": false },
-            { "dayIndex": 3, "time": "14h30", "star": false }
+            { "dayIndex": 0, "time": "18h00" },
+            { "dayIndex": 3, "time": "14h30" }
           ]
         },
         {
@@ -42,10 +42,10 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 1, "time": "20h30", "star": false },
-            { "dayIndex": 2, "time": "20h30", "star": false },
-            { "dayIndex": 3, "time": "20h30", "star": false },
-            { "dayIndex": 5, "time": "20h30", "star": false }
+            { "dayIndex": 1, "time": "20h30" },
+            { "dayIndex": 2, "time": "20h30" },
+            { "dayIndex": 3, "time": "20h30" },
+            { "dayIndex": 5, "time": "20h30" }
           ]
         },
         {
@@ -55,9 +55,9 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 2, "time": "10h30", "star": false },
-            { "dayIndex": 3, "time": "14h30", "star": false },
-            { "dayIndex": 4, "time": "16h45", "star": false }
+            { "dayIndex": 2, "time": "10h30" },
+            { "dayIndex": 3, "time": "14h30" },
+            { "dayIndex": 4, "time": "16h45" }
           ]
         },
         {
@@ -67,8 +67,8 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 2, "time": "14h30", "star": false },
-            { "dayIndex": 3, "time": "16h45", "star": false }
+            { "dayIndex": 2, "time": "14h30" },
+            { "dayIndex": 3, "time": "16h45" }
           ]
         },
         {
@@ -78,8 +78,8 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 2, "time": "16h45", "star": false },
-            { "dayIndex": 4, "time": "10h30", "star": false }
+            { "dayIndex": 2, "time": "16h45" },
+            { "dayIndex": 4, "time": "10h30" }
           ]
         },
         {
@@ -89,8 +89,8 @@
           "version": "VOST",
           "tag": "",
           "sessions": [
-            { "dayIndex": 1, "time": "20h30", "star": false },
-            { "dayIndex": 5, "time": "20h30", "star": false }
+            { "dayIndex": 1, "time": "20h30" },
+            { "dayIndex": 5, "time": "20h30" }
           ]
         },
         {
@@ -99,7 +99,7 @@
           "ageRating": "3",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 3, "time": "10h30", "star": false }]
+          "sessions": [{ "dayIndex": 3, "time": "10h30" }]
         },
         {
           "id": "f9",
@@ -107,7 +107,7 @@
           "ageRating": "3",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 5, "time": "11h00", "star": true }]
+          "sessions": [{ "dayIndex": 5, "time": "11h00" }]
         },
         {
           "id": "f10",
@@ -115,7 +115,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "AVANT-PREMIÈRE",
-          "sessions": [{ "dayIndex": 6, "time": "20h30", "star": false }]
+          "sessions": [{ "dayIndex": 6, "time": "20h30" }]
         }
       ]
     },
@@ -130,8 +130,8 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 0, "time": "18h00", "star": false },
-            { "dayIndex": 6, "time": "14h30", "star": false }
+            { "dayIndex": 0, "time": "18h00" },
+            { "dayIndex": 6, "time": "14h30" }
           ]
         },
         {
@@ -141,10 +141,10 @@
           "version": "VF",
           "tag": "",
           "sessions": [
-            { "dayIndex": 0, "time": "20h30", "star": false },
-            { "dayIndex": 3, "time": "20h30", "star": false },
-            { "dayIndex": 4, "time": "14h30", "star": false },
-            { "dayIndex": 5, "time": "20h30", "star": false }
+            { "dayIndex": 0, "time": "20h30" },
+            { "dayIndex": 3, "time": "20h30" },
+            { "dayIndex": 4, "time": "14h30" },
+            { "dayIndex": 5, "time": "20h30" }
           ]
         },
         {
@@ -153,7 +153,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 1, "time": "20h30", "star": false }]
+          "sessions": [{ "dayIndex": 1, "time": "20h30" }]
         },
         {
           "id": "g4",
@@ -161,7 +161,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 2, "time": "18h00", "star": false }]
+          "sessions": [{ "dayIndex": 2, "time": "18h00" }]
         },
         {
           "id": "g5",
@@ -169,7 +169,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 2, "time": "20h30", "star": false }]
+          "sessions": [{ "dayIndex": 2, "time": "20h30" }]
         },
         {
           "id": "g6",
@@ -177,7 +177,7 @@
           "ageRating": "3",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 3, "time": "17h30", "star": false }]
+          "sessions": [{ "dayIndex": 3, "time": "17h30" }]
         },
         {
           "id": "g7",
@@ -185,7 +185,7 @@
           "ageRating": "3",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 5, "time": "11h00", "star": true }]
+          "sessions": [{ "dayIndex": 5, "time": "11h00" }]
         },
         {
           "id": "g8",
@@ -193,7 +193,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 5, "time": "17h30", "star": false }]
+          "sessions": [{ "dayIndex": 5, "time": "17h30" }]
         },
         {
           "id": "g9",
@@ -201,7 +201,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 5, "time": "20h30", "star": false }]
+          "sessions": [{ "dayIndex": 5, "time": "20h30" }]
         },
         {
           "id": "g10",
@@ -209,7 +209,7 @@
           "ageRating": "TP",
           "version": "VF",
           "tag": "",
-          "sessions": [{ "dayIndex": 6, "time": "20h30", "star": false }]
+          "sessions": [{ "dayIndex": 6, "time": "20h30" }]
         }
       ]
     }

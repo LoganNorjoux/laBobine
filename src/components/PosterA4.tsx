@@ -42,7 +42,6 @@ function WeekTable({ week }: { week: Week }) {
                     .map((s, i) => (
                       <div key={i} className="session">
                         {s.time}
-                        {s.star && <sup>*</sup>}
                       </div>
                     ))}
                 </td>
